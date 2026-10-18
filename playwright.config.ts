@@ -7,6 +7,8 @@ import { defineConfig, devices } from "@playwright/test";
  */
 export default defineConfig({
   testDir: "./e2e",
+  // e2e/load is a vitest suite (vitest.load.config.ts): Playwright would collect its *.test.ts and fail on its imports.
+  testIgnore: ["load/**"],
   // Serves the local OGS key set (flow 13): run the server with --var OGS_JWKS_URL:http://localhost:8833/.well-known/jwks.json
   globalSetup: "./e2e/global-setup.ts",
   fullyParallel: true,
