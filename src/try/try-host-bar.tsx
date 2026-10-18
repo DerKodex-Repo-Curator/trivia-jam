@@ -1,3 +1,4 @@
+import { offerThisComputer, openPlayerWindow } from "@open-game-system/try-kit/browser";
 import { useEffect, useRef } from "react";
 import { GameContext } from "~/game.context";
 import { hostBar, type HostBarState } from "./host-bar";
@@ -54,11 +55,12 @@ export function TryHostBar() {
   const label = bar.kind === "again" ? "Play again" : bar.label;
   const hint = bar.kind === "again" ? "New game, same link" : bar.hint;
   // No phone handy (a skeptic at a laptop): a player's screen opens in a window on this computer.
-  const noPhone = state === "ready" && players === 0;
+  // Not on a touch-screen TV (an iPad as the TV): the window would cover it.
+  const noPhone = offerThisComputer({ plainBrowserTv: true, touchTv: matchMedia("(pointer: coarse)").matches, needsPlayer: state === "ready" && players === 0 });
   return (
     <div className="try-host-bar" role="group" aria-label="Host controls">
       {noPhone && (
-        <button type="button" className="pbtn try-no-phone" onClick={() => window.open(`/games/${gameId}?play=1`, "trivia-jam-player", "popup,width=460,height=860")}>
+        <button type="button" className="pbtn try-no-phone" onClick={() => openPlayerWindow(`/games/${gameId}?play=1`, "trivia-jam-player")}>
           No phone handy? Play on this computer
         </button>
       )}

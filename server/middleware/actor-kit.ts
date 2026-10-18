@@ -4,7 +4,7 @@ import { resolveSession, type SessionEvent } from "../../src/session-middleware"
 import { SERVICE, pathTemplate, versionOf, withWideEvent } from "../../src/wide-event";
 import { handleEvents } from "../../src/events-route";
 import { EVENTS_PATH } from "../../src/client-telemetry";
-import { wsProbe } from "../../src/try/ws-probe";
+import { wsProbe } from "@open-game-system/try-kit/worker";
 
 export default async function middleware(event: SessionEvent) {
   const url = new URL(event.req.url);

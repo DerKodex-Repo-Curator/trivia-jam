@@ -1,6 +1,6 @@
 import { useEffect, type ReactNode } from "react";
 import { installTelemetry, reportError } from "../client-telemetry";
-import { NetworkBanner } from "~/try/network-banner";
+import { mountNetworkBanner } from "@open-game-system/try-kit/browser";
 import {
   HeadContent,
   Outlet,
@@ -161,6 +161,8 @@ function RootComponent() {
   const { host, sessionId, accessToken, payload } = Route.useLoaderData();
   // Client errors and sessions go to this Worker's /events (subscribes to window events once).
   useEffect(() => installTelemetry(window.location.pathname.startsWith("/spectate") ? "tv" : "phone"), []);
+  // Some office and school networks block WebSockets: say so instead of a page that never moves.
+  useEffect(() => void mountNetworkBanner(), []);
 
   return (
     <SessionProvider
@@ -171,7 +173,6 @@ function RootComponent() {
       initialSnapshot={payload.snapshot}
     >
       <Outlet />
-      <NetworkBanner />
     </SessionProvider>
   );
 }

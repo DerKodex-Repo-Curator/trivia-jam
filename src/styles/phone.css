@@ -874,6 +874,3 @@ textarea.pfield { min-height: 132px; padding: 14px 16px; font-size: 16px; line-h
 }
 .prow-lead { border-color: rgba(251, 191, 36, 0.7); box-shadow: 0 0 26px -8px rgba(251, 191, 36, 0.6); }
 
-/* src/try/network-banner.tsx: this network blocks WebSockets. Over everything, on every page. */
-.network-banner { position: fixed; left: 0.8rem; right: 0.8rem; top: calc(0.8rem + env(safe-area-inset-top)); z-index: 1000; margin: 0 auto; max-width: 36rem; padding: 0.8rem 1rem; border-radius: 1rem; background: #7f1d1d; color: #fff; font-size: 0.95rem; line-height: 1.35; box-shadow: 0 0.4rem 1.4rem rgba(0, 0, 0, 0.65); }
-.network-banner b { display: block; margin-bottom: 0.2rem; }

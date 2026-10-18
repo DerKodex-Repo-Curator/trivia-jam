@@ -38,6 +38,7 @@
     "@open-game-system/cast-kit-core": "file:vendor/open-game-system-cast-kit-core-0.2.0.tgz",
     "@open-game-system/cast-kit-react": "file:vendor/open-game-system-cast-kit-react-0.2.0.tgz",
     "@open-game-system/profile-kit": "file:vendor/open-game-system-profile-kit-0.1.0.tgz",
+    "@open-game-system/try-kit": "file:vendor/open-game-system-try-kit-0.1.0.tgz",
     "@opentelemetry/api": "^1.9.0",
     "@radix-ui/react-icons": "^1.3.0",
     "@radix-ui/react-slot": "^1.1.0",

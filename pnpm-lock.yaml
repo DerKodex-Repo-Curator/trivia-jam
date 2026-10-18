@@ -40,6 +40,9 @@ importers:
       '@open-game-system/profile-kit':
         specifier: file:vendor/open-game-system-profile-kit-0.1.0.tgz
         version: file:vendor/open-game-system-profile-kit-0.1.0.tgz(react@19.2.4)
+      '@open-game-system/try-kit':
+        specifier: file:vendor/open-game-system-try-kit-0.1.0.tgz
+        version: file:vendor/open-game-system-try-kit-0.1.0.tgz
       '@opentelemetry/api':
         specifier: ^1.9.0
         version: 1.9.0
@@ -1834,6 +1837,10 @@ packages:
     peerDependenciesMeta:
       react:
         optional: true
+
+  '@open-game-system/try-kit@file:vendor/open-game-system-try-kit-0.1.0.tgz':
+    resolution: {integrity: sha512-sgsswLgd6XneohS0HbPJyLGEpZbAID2VK4YzcNuyprMI9Ukmbh3GHNnjRZv8m9Le0WvVs1+2ckoSrVvWQhK67Q==, tarball: file:vendor/open-game-system-try-kit-0.1.0.tgz}
+    version: 0.1.0
 
   '@opentelemetry/api@1.9.0':
     resolution: {integrity: sha512-3giAOQvZiH5F9bMlMiv8+GSPMeqg0dbaeo58/0SlA9sxSqZhnUtxzX9/2FzyhS9sWQf5S0GJE0AKBrFqjpeYcg==}
@@ -5379,6 +5386,9 @@ packages:
   pure-rand@6.1.0:
     resolution: {integrity: sha512-bVWawvoZoBYpp6yIoQtQXHZjmz35RSVHnUOTefl8Vcjr8snTPY1wnpSPMWekcFwbxI6gtmT7rSYPFvz71ldiOA==}
 
+  qrcode-generator@2.0.4:
+    resolution: {integrity: sha512-mZSiP6RnbHl4xL2Ap5HfkjLnmxfKcPWpWe/c+5XxCuetEenqmNFf1FH/ftXPCtFG5/TDobjsjz6sSNL0Sr8Z9g==}
+
   qrcode.react@4.2.0:
     resolution: {integrity: sha512-QpgqWi8rD9DsS9EP3z7BT+5lY5SFhsqGjpgW5DY/i3mK4M9DTBNz3ErMi8BWYEfI3L0d8GIbGmcdFAS1uIRGjA==}
     peerDependencies:
@@ -7876,6 +7886,10 @@ snapshots:
       zod: 3.25.76
     optionalDependencies:
       react: 19.2.4
+
+  '@open-game-system/try-kit@file:vendor/open-game-system-try-kit-0.1.0.tgz':
+    dependencies:
+      qrcode-generator: 2.0.4
 
   '@opentelemetry/api@1.9.0': {}
 
@@ -11895,6 +11909,8 @@ snapshots:
   punycode@2.3.1: {}
 
   pure-rand@6.1.0: {}
+
+  qrcode-generator@2.0.4: {}
 
   qrcode.react@4.2.0(react@19.2.4):
     dependencies:

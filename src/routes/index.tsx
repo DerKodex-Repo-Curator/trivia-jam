@@ -8,6 +8,7 @@ import { HomePageContent } from "~/components/homepage-content";
 import { TryPhoneLanding } from "~/try/try-phone-landing";
 import { isTryPath, tryGetActorRuntimeEnv } from "~/server-env";
 import { claimCode } from "~/try/codes";
+import { parseRef } from "@open-game-system/try-kit";
 
 const loadIndex = createServerFn({ method: "GET" }).handler(async () => {
   const request = getRequest();
@@ -18,7 +19,7 @@ const loadIndex = createServerFn({ method: "GET" }).handler(async () => {
   // The try path's TV gets a 4-letter code a phone can type (src/try/codes.ts).
   const kv = tryGetActorRuntimeEnv()?.KV_STORAGE;
   const code = tryPath && deviceType === "desktop" && kv ? await claimCode(kv, gameId) : null;
-  return { gameId, deviceType, tryPath, code, ref: ref && /^[a-z0-9_-]{1,32}$/i.test(ref) ? ref.toLowerCase() : null };
+  return { gameId, deviceType, tryPath, code, ref: parseRef(ref) };
 });
 
 export const Route = createFileRoute("/")({
