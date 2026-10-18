@@ -44,7 +44,7 @@ jobs:
 
       - name: Start app
         run: |
-          npx wrangler dev -c .output/server/wrangler.json --port 8787 --inspector-port 0 &
+          npx wrangler dev -c .output/server/wrangler.json --ip 127.0.0.1 --port 8787 --inspector-port 0 &
           echo "Waiting for app on http://127.0.0.1:8787..."
           npx wait-on tcp:127.0.0.1:8787 --timeout 60000
         env:
