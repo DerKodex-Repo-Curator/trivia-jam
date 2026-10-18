@@ -10,7 +10,8 @@ import { useOgsSitting } from "~/ogs/use-ogs-game";
 import type { gameMachine } from "~/game.machine";
 import { GameProvider } from "~/game.context";
 import { getRequestSession } from "~/request-session";
-import { getServerEnv, tryGetActorRuntimeEnv } from "../server-env";
+import { getServerEnv, isTryPath, tryGetActorRuntimeEnv } from "../server-env";
+import { TryHostBar } from "~/try/try-host-bar";
 
 const SpectateRouteInputSchema = z.object({
   gameId: z.string().min(1),
@@ -52,6 +53,8 @@ const loadSpectateRoute = createServerFn({ method: "GET" })
       accessToken,
       payload,
       host: env.ACTOR_KIT_HOST,
+      // The try path: this laptop made the game, so its TV hosts it (src/try/host-bar.ts).
+      tryHost: isTryPath() && payload.snapshot.public.hostId === caller.id,
     };
   });
 
@@ -99,13 +102,16 @@ async function getGameSnapshotFromRuntimeEnv(
 }
 
 export const Route = createFileRoute("/spectate/$gameId")({
+  // `ref`: where a try-path visitor came from (kept on the URL for the wide events).
+  validateSearch: z.object({ ref: z.string().optional(), code: z.string().regex(/^[A-Z]{4}$/).optional() }),
   loader: async ({ params }) => loadSpectateRoute({ data: params }),
   component: SpectateRouteComponent,
 });
 
 function SpectateRouteComponent() {
-  const { host, accessToken, payload } = Route.useLoaderData();
+  const { host, accessToken, payload, tryHost } = Route.useLoaderData();
   const { gameId } = Route.useParams();
+  const { code } = Route.useSearch();
 
   return (
     <GameProvider
@@ -117,7 +123,8 @@ function SpectateRouteComponent() {
     >
       <TvAudio />
       <OgsSitting gameId={gameId} />
-      <SpectatorView host={host} />
+      <SpectatorView host={host} gameCode={code} />
+      {tryHost && <TryHostBar />}
     </GameProvider>
   );
 }

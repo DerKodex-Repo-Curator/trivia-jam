@@ -60,3 +60,13 @@ export function getServerEnv() {
     SESSION_JWT_SECRET: process.env.SESSION_JWT_SECRET,
   });
 }
+
+/**
+ * The try path for strangers (the Show HN preview Worker, `TRY=1`): `/` on a laptop opens a ready
+ * TV with a sample pack, and the TV hosts (src/try). The production game never sets it.
+ */
+export function isTryPath(): boolean {
+  const runtime = globalThis.__env__;
+  if (isRecord(runtime) && "TRY" in runtime) return runtime.TRY === "1";
+  return process.env.TRY === "1";
+}

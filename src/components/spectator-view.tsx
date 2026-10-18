@@ -93,7 +93,8 @@ const ActiveGameContent = ({
   return <TvScreens question={question} questionKey={questionKey} between={between} />;
 };
 
-export const SpectatorView = ({ host }: { host: string }) => {
+/** `gameCode`: the try path's short code (src/try/codes.ts), shown under the QR. */
+export const SpectatorView = ({ host, gameCode }: { host: string; gameCode?: string }) => {
   const currentQuestion = GameContext.useSelector((state) => state.public.currentQuestion);
   const players = GameContext.useSelector((state) => state.public.players);
   const questionResults = GameContext.useSelector((state) => state.public.questionResults);
@@ -106,7 +107,7 @@ export const SpectatorView = ({ host }: { host: string }) => {
   return (
     <TvStage>
       <div className="absolute inset-0">
-          {isLobby && <LobbyDisplay host={host} />}
+          {isLobby && <LobbyDisplay host={host} gameCode={gameCode} />}
 
           {isActive && (
             <ActiveGameContent
@@ -124,10 +125,10 @@ export const SpectatorView = ({ host }: { host: string }) => {
   );
 };
 
-const LobbyDisplay = ({ host }: { host: string }) => {
+const LobbyDisplay = ({ host, gameCode: tryCode }: { host: string; gameCode?: string }) => {
   const players = GameContext.useSelector((state) => state.public.players);
   const gameId = GameContext.useSelector((state) => state.public.id);
-  const gameCode = GameContext.useSelector((state) => state.public.gameCode);
+  const gameCode = GameContext.useSelector((state) => state.public.gameCode) ?? tryCode;
   const onOgsTv = useOnOgsTv();
   return (
     <TvLobby

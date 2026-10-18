@@ -220,3 +220,9 @@
     animation-duration: 3.6s;
   }
 }
+
+/* The try path's host controls on the laptop TV (src/try/try-host-bar.tsx): bottom-right, clear of the stage. */
+.try-host-bar { position: fixed; right: 2.2vw; bottom: 2.4vh; z-index: 50; display: flex; align-items: center; gap: 1vw; }
+.try-host-bar .try-host-hint { font-weight: 700; font-size: clamp(13px, 1.1vw, 20px); color: rgba(255, 255, 255, 0.78); text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6); }
+.try-host-bar kbd { margin-left: 0.6em; padding: 0.1em 0.45em; border-radius: 0.35em; border: 1px solid rgba(255, 255, 255, 0.45); font: 700 0.7em/1.3 ui-monospace, monospace; opacity: 0.8; }
+.try-host-bar button:disabled { opacity: 0.5; cursor: default; }
