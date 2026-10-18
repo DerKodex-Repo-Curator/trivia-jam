@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { PhoneShell } from "~/components/phone/PhoneShell";
 import { parseCode } from "./codes";
 
 /** Type the 4-letter code on the big screen (src/try/codes.ts). */
@@ -26,6 +27,8 @@ export function TryCodeForm() {
           placeholder="ABCD"
           autoCapitalize="characters"
           autoComplete="off"
+          autoCorrect="off"
+          spellCheck={false}
         />
         <button type="submit" className="pbtn pbtn-primary" disabled={!code}>
           Join
@@ -53,10 +56,10 @@ export function TryPhoneLanding() {
     setCopied(true);
   };
   return (
-    <main className="mx-auto flex min-h-screen max-w-md flex-col justify-center gap-5 p-6 text-center">
+    <PhoneShell className="relative flex flex-col justify-center gap-5 px-5 py-8 text-center">
       <p className="pslug">A numbers game for the whole room</p>
       <h1 className="pposter-title lav-text">Trivia Jam</h1>
-      <p className="text-lg">
+      <p className="text-lg text-gray-200">
         The questions show on a big screen: open{" "}
         <b>
           {host.split(".").map((part, i, all) => (
@@ -77,6 +80,6 @@ export function TryPhoneLanding() {
         {copied ? "Link copied" : "Send the link to your laptop"}
       </button>
       <TryCodeForm />
-    </main>
+    </PhoneShell>
   );
 }

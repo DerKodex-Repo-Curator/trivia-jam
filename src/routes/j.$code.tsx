@@ -4,6 +4,7 @@ import { z } from "zod";
 import { tryGetActorRuntimeEnv } from "~/server-env";
 import { parseCode, resolveCode } from "~/try/codes";
 import { TryCodeForm } from "~/try/try-phone-landing";
+import { PhoneShell } from "~/components/phone/PhoneShell";
 
 const resolve = createServerFn({ method: "GET" })
   .inputValidator((input: unknown) => z.object({ code: z.string() }).parse(input))
@@ -27,12 +28,12 @@ export const Route = createFileRoute("/j/$code")({
 function UnknownCode() {
   const { code } = Route.useLoaderData();
   return (
-    <main className="mx-auto flex min-h-screen max-w-md flex-col justify-center gap-5 p-6 text-center">
+    <PhoneShell className="relative flex flex-col justify-center gap-5 px-5 py-8 text-center">
       <h1 className="pposter-title lav-text">Trivia Jam</h1>
-      <p className="text-lg">
+      <p className="text-lg text-gray-200">
         <b>No game with that code{code ? ` (${code})` : ""}.</b> Check the code on the big screen, or start your own game on a laptop.
       </p>
       <TryCodeForm />
-    </main>
+    </PhoneShell>
   );
 }
