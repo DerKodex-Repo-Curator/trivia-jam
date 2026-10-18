@@ -15,6 +15,8 @@ const config = JSON.parse(readFileSync(SRC, "utf8"));
 const tryConfig = {
   ...config,
   name: "trivia-jam-try",
+  // Every log of the try preview goes to the bets scoreboard too (exact counts; open-game-system apps/scoreboard).
+  tail_consumers: [{ service: "ogs-scoreboard" }],
   kv_namespaces: [{ binding: "KV_STORAGE", id: TRY_KV }],
   vars: { ...config.vars, ACTOR_KIT_HOST: HOST, TRY: "1" },
   migrations: [{ tag: "v1", new_sqlite_classes: ["Session", "Game"] }],
