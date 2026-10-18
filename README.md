@@ -2,6 +2,8 @@
 
 Trivia Jam is a real-time multiplayer trivia game designed for social gatherings, classrooms, and events. Players join from their phones while questions and scores are displayed on a shared TV or large screen.
 
+**Try it with no app (Show HN preview):** https://trivia-jam-try.jonathanrmumm.workers.dev/?ref=hn, see [docs/try-path.md](docs/try-path.md).
+
 ## How It Works 🎯
 
 1. **Host Creates Game**: A host starts a game and gets a unique game code
