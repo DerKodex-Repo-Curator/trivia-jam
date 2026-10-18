@@ -71,8 +71,14 @@ const JoinCard = ({ joinUrl, host, gameCode }: { joinUrl: string; host: string; 
   </motion.div>
 );
 
-const Seat = ({ player, index }: { player: LobbyPlayer | undefined; index: number }) => (
-  <div className="flex flex-col items-center" style={{ width: 168 }}>
+const Seat = ({ player, index, onRemove }: { player: LobbyPlayer | undefined; index: number; onRemove?: (id: string) => void }) => (
+  <div className="relative flex flex-col items-center" style={{ width: 168 }}>
+    {/* The try path: the TV hosts, so it can remove a stranger who typed the code. */}
+    {player && onRemove ? (
+      <button type="button" className="tv-seat-remove" onClick={() => onRemove(player.id)} aria-label={`Remove ${player.name}`}>
+        Remove
+      </button>
+    ) : null}
     {player ? (
       <motion.div
         key={player.id}
@@ -99,11 +105,14 @@ export const TvLobby = ({
   host,
   gameCode,
   onOgsTv = false,
+  onRemove,
 }: {
   players: LobbyPlayer[];
   joinUrl: string;
   host: string;
   gameCode?: string;
+  /** The try path (the TV hosts): remove a player from the lobby. */
+  onRemove?: (id: string) => void;
   /** Framed by the OGS TV launcher: its own TV code replaces our QR and link. */
   onOgsTv?: boolean;
 }) => {
@@ -137,7 +146,7 @@ export const TvLobby = ({
         </div>
         <div className="flex justify-between">
           {shown.map((p, i) => (
-            <Seat key={p?.id ?? `seat-${i}`} player={p} index={i} />
+            <Seat key={p?.id ?? `seat-${i}`} player={p} index={i} onRemove={onRemove} />
           ))}
         </div>
       </div>

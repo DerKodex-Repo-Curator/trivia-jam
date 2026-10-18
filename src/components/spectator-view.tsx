@@ -94,7 +94,7 @@ const ActiveGameContent = ({
 };
 
 /** `gameCode`: the try path's short code (src/try/codes.ts), shown under the QR. */
-export const SpectatorView = ({ host, gameCode }: { host: string; gameCode?: string }) => {
+export const SpectatorView = ({ host, gameCode, canRemove = false }: { host: string; gameCode?: string; canRemove?: boolean }) => {
   const currentQuestion = GameContext.useSelector((state) => state.public.currentQuestion);
   const players = GameContext.useSelector((state) => state.public.players);
   const questionResults = GameContext.useSelector((state) => state.public.questionResults);
@@ -107,7 +107,7 @@ export const SpectatorView = ({ host, gameCode }: { host: string; gameCode?: str
   return (
     <TvStage>
       <div className="absolute inset-0">
-          {isLobby && <LobbyDisplay host={host} gameCode={gameCode} />}
+          {isLobby && <LobbyDisplay host={host} gameCode={gameCode} canRemove={canRemove} />}
 
           {isActive && (
             <ActiveGameContent
@@ -125,7 +125,8 @@ export const SpectatorView = ({ host, gameCode }: { host: string; gameCode?: str
   );
 };
 
-const LobbyDisplay = ({ host, gameCode: tryCode }: { host: string; gameCode?: string }) => {
+const LobbyDisplay = ({ host, gameCode: tryCode, canRemove }: { host: string; gameCode?: string; canRemove: boolean }) => {
+  const send = GameContext.useSend();
   const players = GameContext.useSelector((state) => state.public.players);
   const gameId = GameContext.useSelector((state) => state.public.id);
   const gameCode = GameContext.useSelector((state) => state.public.gameCode) ?? tryCode;
@@ -137,6 +138,7 @@ const LobbyDisplay = ({ host, gameCode: tryCode }: { host: string; gameCode?: st
       joinUrl={`https://${host}/games/${gameId}`}
       host={host}
       gameCode={gameCode}
+      onRemove={canRemove ? (playerId) => send({ type: "REMOVE_PLAYER", playerId }) : undefined}
     />
   );
 };

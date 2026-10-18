@@ -18,6 +18,7 @@ export function TryHostBar() {
   const players = GameContext.useSelector((s) => s.public.players.length);
   const questionNumber = GameContext.useSelector((s) => s.public.questionNumber);
   const total = GameContext.useSelector((s) => Object.keys(s.public.questions).length);
+  const gameId = GameContext.useSelector((s) => s.public.id);
   const state: HostBarState = waiting ? "waiting" : parsing ? "parsing" : ready ? "ready" : prep ? "prep" : finished ? "finished" : "active";
   const bar = hostBar({ state, players, questionNumber, total });
 
@@ -52,8 +53,15 @@ export function TryHostBar() {
   if (!bar || bar.kind === "load") return null;
   const label = bar.kind === "again" ? "Play again" : bar.label;
   const hint = bar.kind === "again" ? "New game, same link" : bar.hint;
+  // No phone handy (a skeptic at a laptop): a player's screen opens in a window on this computer.
+  const noPhone = state === "ready" && players === 0;
   return (
     <div className="try-host-bar" role="group" aria-label="Host controls">
+      {noPhone && (
+        <button type="button" className="pbtn try-no-phone" onClick={() => window.open(`/games/${gameId}?play=1`, "trivia-jam-player", "popup,width=460,height=860")}>
+          No phone handy? Play on this computer
+        </button>
+      )}
       {hint && <span className="try-host-hint">{hint}</span>}
       <button type="button" className="pbtn pbtn-primary pbtn-lg" disabled={bar.kind === "button" && !bar.enabled} onClick={act}>
         {label} <kbd>Space</kbd>

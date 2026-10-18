@@ -1,5 +1,6 @@
 import { useEffect, type ReactNode } from "react";
 import { installTelemetry, reportError } from "../client-telemetry";
+import { NetworkBanner } from "~/try/network-banner";
 import {
   HeadContent,
   Outlet,
@@ -170,6 +171,7 @@ function RootComponent() {
       initialSnapshot={payload.snapshot}
     >
       <Outlet />
+      <NetworkBanner />
     </SessionProvider>
   );
 }

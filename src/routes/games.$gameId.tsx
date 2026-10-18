@@ -101,6 +101,9 @@ async function getGameSnapshotFromRuntimeEnv(
 }
 
 export const Route = createFileRoute("/games/$gameId")({
+  // `play`: the try path's "No phone handy?" window on the hosting laptop: a player's screen, though
+  // this browser's session is the host's.
+  validateSearch: z.object({ play: z.union([z.literal(1), z.literal("1")]).optional() }),
   loader: async ({ params }) => loadGameRoute({ data: params }),
   component: GameRouteComponent,
 });
@@ -110,6 +113,8 @@ function GameRouteComponent() {
   const { gameId } = Route.useParams();
   const hostId = payload.snapshot.public.hostId;
   const userId = SessionContext.useSelector((state) => state.public.userId);
+  const { play } = Route.useSearch();
+  const hosting = hostId === userId && play === undefined;
 
   return (
     <GameProvider
@@ -119,8 +124,8 @@ function GameRouteComponent() {
       checksum={payload.checksum}
       initialSnapshot={payload.snapshot}
     >
-      {hostId === userId ? <HostView host={host} /> : <PlayerView />}
-      {hostId === userId && <OgsTvUrl gameId={gameId} />}
+      {hosting ? <HostView host={host} /> : <PlayerView />}
+      {hosting && <OgsTvUrl gameId={gameId} />}
       <OgsSitting gameId={gameId} />
     </GameProvider>
   );

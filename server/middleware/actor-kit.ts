@@ -4,6 +4,7 @@ import { resolveSession, type SessionEvent } from "../../src/session-middleware"
 import { SERVICE, pathTemplate, versionOf, withWideEvent } from "../../src/wide-event";
 import { handleEvents } from "../../src/events-route";
 import { EVENTS_PATH } from "../../src/client-telemetry";
+import { wsProbe } from "../../src/try/ws-probe";
 
 export default async function middleware(event: SessionEvent) {
   const url = new URL(event.req.url);
@@ -20,6 +21,12 @@ export default async function middleware(event: SessionEvent) {
       path: pathTemplate(url.pathname),
     },
     async (ctx) => {
+      // A WebSocket echo: pages check the network lets WebSockets through (src/try/network-banner.tsx).
+      if (url.pathname === "/ws-probe") {
+        ctx.set({ route: "ws-probe" });
+        return runtimeEnv ? wsProbe(event.req) : undefined;
+      }
+
       if (url.pathname === "/health") {
         ctx.set({ route: "health" });
         return new Response("ok");

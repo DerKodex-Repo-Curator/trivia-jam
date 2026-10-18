@@ -123,7 +123,7 @@ function SpectateRouteComponent() {
     >
       <TvAudio />
       <OgsSitting gameId={gameId} />
-      <SpectatorView host={host} gameCode={code} />
+      <SpectatorView host={host} gameCode={code} canRemove={tryHost} />
       {tryHost && <TryHostBar />}
     </GameProvider>
   );
