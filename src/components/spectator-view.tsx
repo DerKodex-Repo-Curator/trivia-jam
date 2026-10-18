@@ -1,5 +1,6 @@
 import { useOnOgsTv } from "~/ogs/use-ogs-game";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { hideEarlyTicket } from "~/try/early-ticket";
 import { GameContext } from "~/game.context";
 import type { GamePublicContext } from "~/game.types";
 import { useQuestionTimer } from "~/hooks/use-question-timer";
@@ -95,6 +96,8 @@ const ActiveGameContent = ({
 
 /** `gameCode`: the try path's short code (src/try/codes.ts), shown under the QR. */
 export const SpectatorView = ({ host, gameCode, canRemove = false }: { host: string; gameCode?: string; canRemove?: boolean }) => {
+  // The app shows the code now: the early ticket (painted with the HTML) steps aside.
+  useEffect(() => hideEarlyTicket(), []);
   const currentQuestion = GameContext.useSelector((state) => state.public.currentQuestion);
   const players = GameContext.useSelector((state) => state.public.players);
   const questionResults = GameContext.useSelector((state) => state.public.questionResults);

@@ -1,6 +1,7 @@
 import { useEffect, type ReactNode } from "react";
 import { installTelemetry, reportError } from "../client-telemetry";
 import { mountNetworkBanner } from "@open-game-system/try-kit/browser";
+import { EARLY_TICKET_SCRIPT } from "~/try/early-ticket";
 import {
   HeadContent,
   Outlet,
@@ -133,6 +134,9 @@ function RootDocument({ children }: { children: ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        {/* The try TV's game code at first paint (src/try/early-ticket.ts); empty and hidden everywhere else. */}
+        <div data-try-ticket="" suppressHydrationWarning style={{ display: "none" }} />
+        <script dangerouslySetInnerHTML={{ __html: EARLY_TICKET_SCRIPT }} />
         {children}
         <Scripts />
       </body>
