@@ -21,7 +21,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test-storybook": "test-storybook",
-    "deploy:try": "pnpm build && node scripts/deploy-try.mjs"
+    "deploy:try": "pnpm build && node scripts/deploy-try.mjs",
+    "test:load": "vitest run --config vitest.load.config.ts"
   },
   "keywords": [
     "trivia"
